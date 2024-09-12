@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
-public class startGame {
+public class playGame {
     public static void main(String[] args){ 
 
         String pathToCore = args[0];
