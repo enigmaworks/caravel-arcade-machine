@@ -20,37 +20,29 @@ public class startGame {
             System.out.println(timedata);
             int time = Integer.parseInt(timedata);
             
-            try {
-                FileWriter writer = new FileWriter(timefile);
-                writer.write(Integer.toString(time));
-
-                if(time <= 0){
-
-                } else {
-                    try{
-                        // retroarch --fullscreen -L /path/to/core.so /path/to/rom
-                        // Runtime.getRuntime().exec("retroarch --fullscreen -L " + args[0] + " " + args[1]);
-                        
-                        while(time > 0){
+            if(time <= 0){
+                
+            } else {
+                // retroarch --fullscreen -L /path/to/core.so /path/to/rom
+                // Runtime.getRuntime().exec("retroarch --fullscreen -L " + args[0] + " " + args[1]);
+                while(time > 0){
+                        try{
                             try{
-                                time--;
-                                writer.write(Integer.toString(time));
-                                System.out.println(Integer.toString(time));
                                 Thread.sleep(1000);
                             } catch (InterruptedException e){
                                 System.out.println(e);
                             }
-                            //show coin prompt
+                            FileWriter writer = new FileWriter(timefile);
+                            time--;
+                            writer.write(Integer.toString(time));
+                            writer.close();
+                            System.out.println(Integer.toString(time));
+                        } catch (IOException e){
+                            System.out.println(e);
                         }
-
-                    } catch (IOException e){
-                        System.out.println(e);
+                        //show coin prompt
                     }
-                }
-
-                writer.close();
-
-            } catch (IOException e){ System.out.println(e); }
+            }
         } catch (FileNotFoundException e){ System.out.println(e); }
     }
 }
