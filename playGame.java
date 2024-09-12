@@ -7,7 +7,9 @@ import java.io.FileNotFoundException;
 
 public class playGame {
     public static void main(String[] args){ 
-
+        // this script is executed by emulation station, when a game is selected.
+        // parameters specified in es_systems.config
+        
         String pathToCore = args[0];
         String pathToRom = args[1];
 
