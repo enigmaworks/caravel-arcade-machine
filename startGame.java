@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 public class startGame {
-    public static void main(String[] args){      
+    public static void main(String[] args){ 
+
+        String pathToCore = args[0];
+        String pathToRom = args[1];
+
         File pauseFile = new File("pause.txt"); //contains a single boolean value
         File timeFile = new File("time.txt"); //contains a single int 0 or higher
 
@@ -25,8 +29,7 @@ public class startGame {
             if(time > 0) {
                 //time remains to play. Open game.
 
-                // retroarch --fullscreen -L /path/to/core.so /path/to/rom
-                // Runtime.getRuntime().exec("retroarch --fullscreen -L " + args[0] + " " + args[1]);
+                // Runtime.getRuntime().exec("retroarch --fullscreen -L " + pathToCore + " " + pathToRom);
 
                 while(time > 0 && pause == false){
                     try {
