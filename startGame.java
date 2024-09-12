@@ -7,41 +7,69 @@ import java.io.FileNotFoundException;
 
 public class startGame {
     public static void main(String[] args){      
-        try {
-            File timefile = new File("time.txt");
-            String timedata = "";
-            Scanner reader = new Scanner(timefile);
+        File pauseFile = new File("pause.txt");
+        File timeFile = new File("time.txt");
 
-            while(reader.hasNextLine()){
-                timedata += reader.nextLine();
+        try {
+            Scanner timeFileReader = new Scanner(timeFile);
+            int time = 0;
+
+            if(timeFileReader.hasNextLine()){
+                time = Integer.parseInt(timeFileReader.nextLine());
             }
 
-            reader.close();
-            System.out.println(timedata);
-            int time = Integer.parseInt(timedata);
+            timeFileReader.close();
+            System.out.println(time);
             
             if(time <= 0){
                 
             } else {
                 // retroarch --fullscreen -L /path/to/core.so /path/to/rom
                 // Runtime.getRuntime().exec("retroarch --fullscreen -L " + args[0] + " " + args[1]);
-                while(time > 0){
+                
+                Boolean pause = false;
+
+                while(time > 0 && pause == false){
+                    try {
+                        Scanner pauseFileReader = new Scanner(pauseFile);
+    
+                        if(pauseFileReader.hasNextLine()) {
+                            pause = Boolean.parseBoolean(pauseFileReader.nextLine());
+                        }
+                        pauseFileReader.close();
+    
+                    } catch (FileNotFoundException e) {
+                        System.out.println(e);
+                    }
+
+                    try{
                         try{
-                            try{
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e){
-                                System.out.println(e);
-                            }
-                            FileWriter writer = new FileWriter(timefile);
-                            time--;
-                            writer.write(Integer.toString(time));
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e){
+                            System.out.println(e);
+                        }
+                        FileWriter writer = new FileWriter(timeFile);
+                        time--;
+                        writer.write(Integer.toString(time));
+                        writer.close();
+                        System.out.println(Integer.toString(time));
+                        
+                    } catch (IOException e){
+                        System.out.println(e);
+                    }
+
+                    if(pause == false){
+                        //show coin prompt
+                    } else {
+                        try {
+                            FileWriter writer = new FileWriter(pauseFile);
+                            writer.write("false");
                             writer.close();
-                            System.out.println(Integer.toString(time));
                         } catch (IOException e){
                             System.out.println(e);
                         }
-                        //show coin prompt
                     }
+                }
             }
         } catch (FileNotFoundException e){ System.out.println(e); }
     }
