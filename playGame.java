@@ -13,8 +13,12 @@ public class playGame {
         String pathToCore = args[0];
         String pathToRom = args[1];
 
-        File pauseFile = new File("pause.txt"); //contains a single boolean value
-        File timeFile = new File("time.txt"); //contains a single int 0 or higher
+        File pauseFile = new File("pause.txt");
+        //contains a single boolean value
+        // is changed to true when the arcade pause button is pressed
+        File timeFile = new File("time.txt");
+        //contains a single int 0 or higher
+        // is increased by the coin reader script when a coin is inputed
 
         try {
             // read current time 
@@ -30,7 +34,6 @@ public class playGame {
             
             if(time > 0) {
                 //time remains to play. Open game.
-
                 // Runtime.getRuntime().exec("retroarch --fullscreen -L " + pathToCore + " " + pathToRom);
 
                 while(time > 0 && pause == false){
@@ -70,7 +73,7 @@ public class playGame {
                 // simulate pause key press
                 // show coin prompt
             } else {
-                // player exited the game, reset varaibles and end script
+                // player exited or paused the game, reset varaibles and end script
                 try {
                     FileWriter writer = new FileWriter(pauseFile);
                     writer.write("false");
